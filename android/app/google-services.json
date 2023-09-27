@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "574707537512",
+    "project_id": "mvpemprendimiento",
+    "storage_bucket": "mvpemprendimiento.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574707537512:android:02f0a6a901845644128ddd",
+        "android_client_info": {
+          "package_name": "app.ud.mvp_emprendimiento"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAQK9fzD-3k65JuQxi2SbVAGFr1o00LnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

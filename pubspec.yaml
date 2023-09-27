@@ -7,7 +7,23 @@ environment:
 
 dependencies: 
   cupertino_icons: ^1.0.2
-  get: 4.6.6
+  intl: ^0.18.0
+  permission_handler: ^11.0.0
+  flutter_image_compress: ^2.0.4
+
+
+  # Firebase
+  firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
+  cloud_firestore: ^4.4.3
+  firebase_storage: ^11.0.14
+
+  # Get
+  get: ^4.6.5
+  get_storage: ^2.1.1
+  
+  image_picker: ^1.0.2
+  cached_network_image: ^3.2.3
   flutter: 
     sdk: flutter
 
