@@ -2,8 +2,12 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:proyecto_final_factores_app/app/services/model_services/user_service.dart';
+import 'package:proyecto_final_factores_app/app/widgets/widgets.dart';
+import 'package:proyecto_final_factores_app/app/models/user_model.dart'
+    as user_model;
 
+import '../../utils/utils.dart';
 import 'database_service.dart';
 
 class AuthService {
@@ -13,7 +17,7 @@ class AuthService {
   ///signIn
   Future<dynamic> signIn(
       {required String email, required String password}) async {
-    
+    await connectionStatus.getAuthStatus();
 
     String errorMessage = '';
     try {
@@ -51,7 +55,7 @@ class AuthService {
   ///signUp can be UserCredential or error string code
   Future<dynamic> signUp(
       {required String email, required String password}) async {
-    
+    await connectionStatus.getAuthStatus();
 
     String errorMessage = '';
 
@@ -84,7 +88,7 @@ class AuthService {
 
   ///sendPasswordReset
   Future<String> sendPasswordReset(String email) async {
-    
+    await connectionStatus.getAuthStatus();
 
     String errorMessage = '';
     try {
@@ -111,12 +115,14 @@ class AuthService {
     String email,
     String newPassword,
   ) async {
+    await connectionStatus.getNormalStatus();
+
     try {
       final signInStatus =
           await signIn(email: email, password: currentPassword);
 
       if (signInStatus.isEmpty as bool) {
-        final user = _firebaseAuth.currentUser;
+        var user = _firebaseAuth.currentUser;
 
         await user!.updatePassword(newPassword);
 
@@ -132,7 +138,7 @@ class AuthService {
 
   ///Delete User
   Future<bool> deleteUser() async {
-    
+    await connectionStatus.getAuthStatus();
 
     if (await getCurrentUserLocal() != null) {
       try {
@@ -150,7 +156,7 @@ class AuthService {
 
   ///Delete User
   Future<bool> deleteAccount({required String userId}) async {
-    
+    await connectionStatus.getAuthStatus();
 
     if (await getCurrentUserLocal() != null) {
       try {
@@ -162,14 +168,14 @@ class AuthService {
 
         switch (error.code) {
           case 'requires-recent-login':
-            Get.snackbar(
-              '','Por favor, vuelve a iniciar sesión para poder eliminar tu cuenta.'
+            CustomSnackBars.showErrorSnackBar(
+              'Por favor, vuelve a iniciar sesión para poder eliminar tu cuenta.',
             );
             return false;
 
           default:
-            Get.snackbar(
-              '','Hubo un error al eliminar tu usuario, por favor intenta más tarde.'
+            CustomSnackBars.showErrorSnackBar(
+              'Hubo un error al eliminar tu usuario, por favor intenta más tarde.',
             );
             return false;
         }
@@ -182,6 +188,7 @@ class AuthService {
 
   ///SignOut
   Future<bool> signOut() async {
+    await connectionStatus.getNormalStatus();
 
     try {
       await _firebaseAuth.signOut();
@@ -212,16 +219,16 @@ class AuthService {
     }
   }
 
-  // Future<user_model.User?> getCurrentUserHome() async {
-  //   await connectionStatus.getNormalStatus();
+  Future<user_model.User?> getCurrentUserHome() async {
+    await connectionStatus.getNormalStatus();
 
-  //   try {
-  //     return (await userService.getCurrentUser())!;
-  //   } on FirebaseAuthException catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  //   return null;
-  // }
+    try {
+      return (await userService.getCurrentUser())!;
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
 }
 
 final AuthService auth = AuthService(FirebaseAuth.instance);

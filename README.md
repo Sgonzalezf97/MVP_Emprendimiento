@@ -1,16 +1,30 @@
-# mvp_emprendimiento
+# Aplicación para la venta de artículos de computador versión móvil
 
-A new Flutter project.
+* Juan Sebastián González Forero - 20181020029
+* Marcela del Pilar Porras Queedo - 20191020
 
-## Getting Started
+MVP para el PLAN DE NEGOCIO PARA LA COMERCIALIZACIÓN DE ALIMENTOS
+SUSCEPTIBLES AL DETERIORO EN MERCADOS Y TIENDAS DE BOGOTÁ. Para el desarrollo, se utilizaron las siguientes herramientas:
 
-This project is a starting point for a Flutter application.
+* Flutter
+* Dart
+* Firebase
 
-A few resources to get you started if this is your first Flutter project:
+### Instalacióm
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Primero, se clona el siguiente repositorio:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone https://github.com/Sgonzalezf97/MVP_Emprendimiento.git
+```
+
+Segundo, descargar los paquetes: 
+
+```
+flutter pub get
+```
+Tercero, correr la aplicación:
+
+```
+flutter run
+```

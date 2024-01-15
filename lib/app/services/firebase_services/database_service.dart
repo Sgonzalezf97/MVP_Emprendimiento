@@ -35,7 +35,7 @@ class Database {
 
   /// Obtiene un documento dentro de una coleccion mediante un campo específico
   Future<QuerySnapshot> getDataByCustonParam(
-    String documentId,
+    dynamic documentId,
     String collection,
     String param,
   ) {
@@ -1031,6 +1031,45 @@ class Database {
         document.reference.delete();
       }
     });
+  }
+
+  /// Guarda un documento dentro de una subcoleccion dado un ID
+  Future<bool> saveDocumentInSubcollection({
+    required String documentId,
+    required String collection,
+    required String subcollection,
+    required Map<String, dynamic> subcollectionData,
+  }) async {
+    try {
+      final reference = await firestore
+          .collection(collection)
+          .doc(documentId)
+          .collection(subcollection)
+          .add(subcollectionData);
+      subcollectionData['id'] = reference.id;
+      await reference.update(subcollectionData);
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  /// Guarda un documento dentro de una subcoleccion dado un ID
+  Future<bool> saveDocumentInCollection({
+    required String collection,
+    required Map<String, dynamic> collectionData,
+  }) async {
+    try {
+      final reference =
+          await firestore.collection(collection).add(collectionData);
+      collectionData['id'] = reference.id;
+      await reference.update(collectionData);
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
 

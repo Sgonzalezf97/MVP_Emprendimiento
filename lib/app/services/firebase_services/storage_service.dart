@@ -7,7 +7,7 @@ class StorageService {
   Future<String?> uploadFile(String userID, String folder, File file) async {
     final tmpDir = await path_provider.getTemporaryDirectory();
     final targetName = DateTime.now().millisecondsSinceEpoch;
-    final XFile? compressFile = await FlutterImageCompress.compressAndGetFile(
+    final File? compressFile = await FlutterImageCompress.compressAndGetFile(
       file.path,
       '${tmpDir.absolute.path}/$targetName.jpg',
       quality: 70,
@@ -16,10 +16,10 @@ class StorageService {
     );
 
     final fstorage = FirebaseStorage.instance;
-    final XFile image = compressFile!;
+    final File image = compressFile!;
     final Reference storageRef =
         fstorage.ref().child('Users_files/$userID/$folder');
-    final UploadTask uploadTask = storageRef.putFile(File(image.path));
+    final UploadTask uploadTask = storageRef.putFile(image);
     return (await uploadTask).ref.getDownloadURL();
   }
 

@@ -4,16 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -50,19 +40,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDAQK9fzD-3k65JuQxi2SbVAGFr1o00LnY',
-    appId: '1:574707537512:android:02f0a6a901845644128ddd',
-    messagingSenderId: '574707537512',
-    projectId: 'mvpemprendimiento',
-    storageBucket: 'mvpemprendimiento.appspot.com',
+    apiKey: 'AIzaSyCy9RLYdeG4VOt23RoemO2EHSMd3Vsc_2I',
+    appId: '1:458113215854:android:5d6739031e662aa5cb257f',
+    messagingSenderId: '458113215854',
+    projectId: 'proyecto-final-factores',
+    storageBucket: 'proyecto-final-factores.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCcNicKcrERyZcqlw5ReAgxCJ5dJv0g6Gw',
-    appId: '1:574707537512:ios:39d85f1f4a8b40ae128ddd',
-    messagingSenderId: '574707537512',
-    projectId: 'mvpemprendimiento',
-    storageBucket: 'mvpemprendimiento.appspot.com',
-    iosBundleId: 'app.ud.mvpEmprendimiento',
+    apiKey: 'AIzaSyAIlS3eTwduzG8QgifBi6lL8oqCUZYmoqY',
+    appId: '1:458113215854:ios:81f2b0658d84261acb257f',
+    messagingSenderId: '458113215854',
+    projectId: 'proyecto-final-factores',
+    storageBucket: 'proyecto-final-factores.appspot.com',
+    iosClientId:
+        '458113215854-cc5e0jloqr6u54r421i88m23osskvhb6.apps.googleusercontent.com',
+    iosBundleId: 'app.ud.proyectoFinalFactoresApp',
   );
 }

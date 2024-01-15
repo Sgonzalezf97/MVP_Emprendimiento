@@ -1,14 +1,16 @@
 class FirebaseReferences {
 // Firebase
   String users = 'users';
-
+  String products = 'products';
+  String creditCards = 'creditCards';
+  String purchases = 'purchases';
 }
 
 FirebaseReferences firebaseReferences = FirebaseReferences();
 
 /// Esta clase contiene las referencias de imágenes
 class ImageReferences {
-  String marker = 'assets/images/marker.png';
+  String logo = 'assets/images/main_logo.png';
 
 }
 

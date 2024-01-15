@@ -5,10 +5,18 @@ import 'package:intl/intl.dart';
 ///
 
 class AppConstants {
-  final numberFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 0);
+  final numberFormat = NumberFormat.currency(
+    symbol: 'COP',
+    decimalDigits: 0,
+    locale: 'eu',
+  );
 
- final termsUrl = 'https://firebasestorage.googleapis.com/v0/b/renovaciones-f74d3.appspot.com/o/App_files%2F01.%20El%20amor%20asesinado%20Autor%20Emilia%20Pablo%20Baza%CC%81n.pdf?alt=media&token=2d45246b-85d6-44f8-b553-2e2367286620';
- 
+  // WOMPI
+  bool wompiIsSandbox = false;
+  // FALSE: Se cobra dinero real de tarjetas de crédito reales.
+  // TRUE: No se cobra dinero real. Se puede comprar sin tener tarjetas registradas.
+  final String wompiCurrency = 'COP';
+  int wompiCuotas = 12;
 }
 
 AppConstants constants = AppConstants();

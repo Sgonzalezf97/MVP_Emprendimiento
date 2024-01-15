@@ -1,117 +1,134 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
-// import 'package:renovaciones_cliente/app/models/user.dart';
-// import 'package:renovaciones_cliente/app/services/services.dart';
-// import 'package:renovaciones_cliente/app/utils/utils.dart';
+import 'package:proyecto_final_factores_app/app/models/user_model.dart';
+import 'package:proyecto_final_factores_app/app/services/services.dart';
+import 'package:proyecto_final_factores_app/app/utils/utils.dart';
 
-// class UserService {
-//   factory UserService() {
-//     return _instance;
-//   }
+class UserService {
+  factory UserService() {
+    return _instance;
+  }
 
-//   UserService._internal();
-//   static String usersReference = firebaseReferences.users;
-//   static final UserService _instance = UserService._internal();
-//   var firestore = FirebaseFirestore.instance;
+  UserService._internal();
+  static String usersReference = firebaseReferences.users;
+  static final UserService _instance = UserService._internal();
+  var firestore = FirebaseFirestore.instance;
 
-//   //Para paginacion
-//   DocumentSnapshot? lastDocument;
+  //Para paginacion
+  DocumentSnapshot? lastDocument;
 
-//   Future<bool> save({
-//     required User user,
-//     required String customId,
-//   }) async {
-//     try {
-//       user.created = DateTime.now();
-//       await database.saveUserWithCustom(
-//         user.toJson(),
-//         usersReference,
-//         customId,
-//       );
-//       return true;
-//     } on Exception catch (e) {
-//       print(e);
-//       return false;
-//     }
-//   }
+  Future<bool> save({
+    required User user,
+    required String customId,
+  }) async {
+    try {
+      user.created = DateTime.now();
+      await database.saveUserWithCustom(
+        user.toJson(),
+        usersReference,
+        customId,
+      );
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
-//   Future<bool> delete(User user) async {
-//     try {
-//       await database.deleteDocument(user.id!, usersReference);
-//       return true;
-//     } on Exception catch (e) {
-//       print(e);
-//       return false;
-//     }
-//   }
+  Future<bool> delete(User user) async {
+    try {
+      await database.deleteDocument(user.id!, usersReference);
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
-//   Future<bool> update(User user) async {
-//     try {
-//       final DocumentReference docRef = database.getDocumentReference(
-//         collection: usersReference,
-//         documentId: user.id!,
-//       );
+  Future<bool> update(User user) async {
+    try {
+      final DocumentReference docRef = database.getDocumentReference(
+        collection: usersReference,
+        documentId: user.id!,
+      );
 
-//       await docRef.update(user.toJson());
-//       return true;
-//     } catch (e) {
-//       print(e.toString());
-//       return false;
-//     }
-//   }
+      await docRef.update(user.toJson());
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
-//   Future<bool> updateUserClient({
-//     required String collectionDocumentId,
-//     required Map<String, dynamic> data,
-//   }) async {
-//     try {
-//       await database.updateFirst(
-//         collectionDocumentId,
-//         usersReference,
-//         'client',
-//         data,
-//       );
-//       return true;
-//     } on Exception catch (e) {
-//       print(e);
-//       return false;
-//     }
-//   }
+  Future<bool> updateUserClient({
+    required String collectionDocumentId,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      await database.updateFirst(
+        collectionDocumentId,
+        usersReference,
+        'client',
+        data,
+      );
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
-//   Future<User?> getUserDocumentById(
-//     String documentId,
-//   ) async {
-//     final querySnapshot = await database.getDocument(
-//       collection: 'users',
-//       documentId: documentId,
-//     );
+  Future<User?> getCurrentUser() async {
+    final currentFirebaseUser = auth.getCurrentUser();
+    final user = await getUserDocumentById(
+      currentFirebaseUser!.uid,
+    );
+    return user;
+  }
 
-//     if (!querySnapshot.exists) return null;
+  Future<User?> getUserDocumentById(
+    String documentId,
+  ) async {
+    final querySnapshot = await database.getDocument(
+      collection: 'users',
+      documentId: documentId,
+    );
 
-//     return User.fromJson(
-//       querySnapshot.data() as Map<String, dynamic>,
-//     );
-//   }
+    if (!querySnapshot.exists) return null;
 
-//   Future<User?> getCurrentUser() async {
-//     final currentFirebaseUser = auth.getCurrentUser();
-//     print(currentFirebaseUser!.uid);
-//     final user = await getUserDocumentById(
-//       currentFirebaseUser.uid,
-//     );
-//     return user;
-//   }
+    return User.fromJson(
+      querySnapshot.data() as Map<String, dynamic>,
+    );
+  }
 
-//   Future<bool> validateLogin() async {
-//     User user = User();
-//     user = (await getCurrentUser())!;
-//     if (user.userType == 'client') {
-//       return true;
-//     } else {
-//       await auth.signOut();
-//       return false;
-//     }
-//   }
-// }
+  Future<bool> validateLogin() async {
+    User user = User();
+    user = (await getCurrentUser())!;
+    if (user.role!.contains('client')) {
+      return true;
+    } else {
+      await auth.signOut();
+      return false;
+    }
+  }
 
-// UserService userService = UserService();
+  getShops() async {
+    RxList shops = [].obs;
+    final querySnapshot = await database.getDataByCustonParam(
+      ['shop'],
+      usersReference,
+      'role',
+    );
+    if (querySnapshot.docs.isEmpty) return [];
+
+    for (final shop in querySnapshot.docs) {
+      shops.add(User.fromJson(
+        shop.data() as Map<String, dynamic>,
+      ));
+    }
+    return shops;
+  }
+}
+
+UserService userService = UserService();

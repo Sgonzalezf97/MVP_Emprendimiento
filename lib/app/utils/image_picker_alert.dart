@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'utils.dart';
+import 'package:proyecto_final_factores_app/app/utils/palette.dart';
 
 class ImagePickAlert {
   profilePictureAlert({
@@ -19,12 +19,18 @@ class ImagePickAlert {
           Itembutton(
             onPressed: fromPhoto,
             label: 'Tomar una foto     ',
-            icon: Icons.camera_alt,
+            icon: const Icon(
+              Icons.camera_alt,
+              color: Palette.mainBlue,
+            ),
           ),
           Itembutton(
             onPressed: fromGallery,
             label: 'Desde galería      ',
-            icon: Icons.photo_album,
+            icon: const Icon(
+              Icons.photo_album,
+              color: Palette.mainBlue,
+            ),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -32,7 +38,7 @@ class ImagePickAlert {
           child: const Text(
             'Cancelar',
             style: TextStyle(
-              color: Palette.darkGreen,
+              color: Palette.mainBlue,
               fontWeight: FontWeight.w700,
               fontSize: 16,
             ),
@@ -55,7 +61,7 @@ class Itembutton extends StatelessWidget {
 
   final void Function()? onPressed;
   final String label;
-  final IconData icon;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +74,11 @@ class Itembutton extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Icon(
-              icon,
-              color: Palette.green.withOpacity(0.3),
-            ),
+            child: icon,
           ),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Palette.black,
               fontWeight: FontWeight.w700,
               fontSize: 16,
