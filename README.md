@@ -1,4 +1,5 @@
-# Aplicación para la venta de artículos de computador versión móvil
+PLAN DE NEGOCIO PARA LA COMERCIALIZACIÓN DE ALIMENTOS
+SUSCEPTIBLES AL DETERIORO EN MERCADOS Y TIENDAS DE BOGOTÁ.
 
 * Juan Sebastián González Forero - 20181020029
 * Marcela del Pilar Porras Queedo - 20191020
